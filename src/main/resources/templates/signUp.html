@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="base-template::base-layout(~{::title},~{::section} )">
+<head>
+	<meta charset="UTF-8" />
+	<title>Sign Up Page</title>
+</head>
+<body>
+	<section>
+	
+		<div class="mx-auto mt-5 bg-white d-flex round" style="width:80%">
+				
+			<div class="p-4" style="width:60%" >
+			
+				<h1 class="text-center text-info text-uppercase"> Register Here !!</h1>
+				
+				<form th:action="@{/register}" th:method="post" th:object="${user}" novalidate >
+									
+					<div class="form-group">
+						<label for="name_field" class="text-info" >Your Name</label>
+						
+						<input name="name" type="text" class="form-control" required
+						id="name_field" placeholder="Enter name" th:value="${user.name}" 
+						th:classappend="${#fields.hasErrors('name') ? 'is-invalid' : '' }" >
+						
+						<div class="invalid-feedback" th:each="err: ${#fields.errors('name')}" th:text="${err}"></div>
+							
+					</div>
+					
+
+
+					<div class="form-group">
+						<label for="email_field" class="text-info" >Your Email</label>
+						
+						<input name="email" type="email" class="form-control" required
+						id="email_field" placeholder="Enter email" th:value="${user.email}"
+						th:classappend="${#fields.hasErrors('email') ? 'is-invalid' : '' }" >
+							
+						<small id="emailHelp" class="form-text text-muted">We'll
+						never share your email with anyone else.</small>
+						
+						<div class="invalid-feedback" th:each="err: ${#fields.errors('email')}" th:text="${err}"></div>
+					</div>
+									
+									
+					<div class="form-group">
+						<label for="password_field" class="text-info" >Your Password</label>
+						
+						<input name="password" type="password" class="form-control" required
+						id="password_field" placeholder="Enter password" th:value="${user.password}"
+						th:classappend="${#fields.hasErrors('password') ? 'is-invalid' : '' }" >
+						
+						<div class="invalid-feedback" th:each="err: ${#fields.errors('password')}" th:text="${err}"></div>
+							
+					</div>
+									
+										
+					<div class="form-group">
+						<label for="about_field" class="text-info" >About yourself</label>
+						<textarea rows="2" name="about" class="form-control"
+						placeholder="Something related to your work" th:text="${user.about}" ></textarea>
+					</div>
+					
+					
+					<div class="form-check mb-3">
+						<input type="checkbox" class="form-check-input" name="agreement" id="check_field">
+						 <label class="form-check-label" for="check_field">Agree Terms and Conditions</label>
+					</div>
+					
+					<div>
+						<button type="submit" class="btn btn-primary">Submit</button>
+						<button type="reset" class="btn btn-secondary mx-3">Reset</button>
+					</div>
+					
+				</form>
+				
+			</div>
+			<div class="d-flex justify-content-center " style="width:40%">
+			
+				<div class="d-flex flex-column justify-content-center  ">
+					<img alt="signUp" th:src="@{/img/signup-image.jpg}" class="img-fluid">
+					<a th:href="@{/login}" class="text-right m-2">I am already a member</a>
+				</div>
+				
+				
+			</div>
+		</div>
+	</section>
+</body>
+</html>
