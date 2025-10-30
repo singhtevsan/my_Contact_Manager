@@ -36,7 +36,7 @@ public class Contact {
 	
 	public Contact() {
 		super();
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	public Contact(int cId, String name, String nickName, String email, String work, String phone, String imageUrl,

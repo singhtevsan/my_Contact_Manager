@@ -1,6 +1,7 @@
 package com.contactManager.Controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,6 +21,9 @@ public class AppController {
 	
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
 
 	@GetMapping("/")
 	public String homeHandler() {
@@ -62,6 +66,8 @@ public class AppController {
 				return "signUp";
 			}
 			
+			
+			user.setPassword(passwordEncoder.encode(user.getPassword()));
 			user.setRole("ROLE_USER");
 			user.setImageUrl("defaultProfile.png");
 			user.setEnabled(true);
@@ -90,4 +96,12 @@ public class AppController {
 		
 		return "login";
 	}
+	
+//	@GetMapping("/login-fail")
+//	@ResponseBody
+//	public String handleLoginFail() {
+//		System.out.println("This is from handle login fail handler");
+//		
+//		return "Login Fails";
+//	}
 }

@@ -23,7 +23,7 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int uId;
 	
-	@NotBlank
+	@NotBlank(message = "Name should not be blank")
 	@Size(min = 4, max = 15, message = "Name should be 4-15 characters long")
 	private String name;
 	
@@ -46,7 +46,7 @@ public class User {
 	
 	public User() {
 		super();
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	public User(int uId, String name, String email, String password, String about, String role, String imageUrl,

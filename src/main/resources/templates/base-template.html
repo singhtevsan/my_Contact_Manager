@@ -32,7 +32,7 @@
 				
 				<li class="nav-item active"><a class="nav-link" th:href="@{/about}">About Us</a></li>
 				
-				<li class="nav-item active"><a class="nav-link" th:href="@{/login}">Login</a></li>
+				<li class="nav-item active"><a class="nav-link" th:href="@{/user/index}">Login</a></li>
 				
 				<li class="nav-item active"><a class="nav-link" th:href="@{/signUp}">Sign Up</a></li>
 				
@@ -44,9 +44,9 @@
 	<!-- End of Navbar -->
 	
 	<!-- message div start -->
-	<div class="container text-center mt-2" style="width: 80%">
+	<div class="container text-center" style="width: 80%" >
 		
-		<div th:if="${message}" class="alert" th:classappend="${message.type}" >
+		<div th:if="${message}" class="alert mt-3" th:classappend="${message.type}" >
 			<strong th:text="${message.content}"></strong>
 			<button type="button" class="close text-center" data-dismiss="alert" aria-label="Close">
    				<span aria-hidden="true">&times;</span>
@@ -56,7 +56,30 @@
 	</div>
 	<!-- message div end -->
 	
-
+	
+	
+	
+	<!-- param error div start -->
+	
+	<div class="container text-center" style="width:80%" >
+		<div th:if="${param.error}" class="alert alert-danger mt-3" >
+			<strong >Invalid Username or Password !!</strong>
+			<button type="button" class="close text-center" data-dismiss="alert" aria-label="Close">
+	  				<span aria-hidden="true">&times;</span>
+				</button>
+		</div>
+		<div th:if="${param.logout}" class="alert alert-success mt-3" >
+			<strong >You have successfully logged out !!</strong>
+			<button type="button" class="close text-center" data-dismiss="alert" aria-label="Close">
+	  				<span aria-hidden="true">&times;</span>
+				</button>
+		</div>
+	</div>
+	
+	<!-- param error div end -->
+	
+	
+	
 	<!-- content div -->
 	<div class="app" th:replace="${content}">Not Rendered.</div>
 	
