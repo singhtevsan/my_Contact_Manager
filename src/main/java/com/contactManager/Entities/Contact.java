@@ -1,5 +1,7 @@
 package com.contactManager.Entities;
 
+import org.springframework.format.annotation.NumberFormat;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -7,6 +9,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "contacts_app")
@@ -16,14 +21,19 @@ public class Contact {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int cId;
 	
+	@Size(min = 4, message = "Name must be 4 characters long !!")
 	private String name;
 	
 	private String nickName;
 	
+	@Email(regexp = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$")
 	private String email;
 	
+	@NotBlank(message = "Please add work details !!")
 	private String work;
 	
+	@NumberFormat
+	@Size(min = 10, message = "Number must be valid")
 	private String phone;
 	
 	private String imageUrl;
@@ -32,6 +42,7 @@ public class Contact {
 	private String description;
 	
 	@ManyToOne
+//	@JsonIgnore
 	private User user;
 	
 	public Contact() {
@@ -127,8 +138,7 @@ public class Contact {
 	@Override
 	public String toString() {
 		return "Contact [cId=" + cId + ", name=" + name + ", nickName=" + nickName + ", email=" + email + ", work="
-				+ work + ", phone=" + phone + ", imageUrl=" + imageUrl + ", description=" + description + ", user="
-				+ user + "]";
+				+ work + ", phone=" + phone + ", imageUrl=" + imageUrl + ", description=" + description +  "]";
 	}
 
 		

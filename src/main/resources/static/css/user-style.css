@@ -1,0 +1,94 @@
+
+.main-div {
+	margin-top: 56px;
+}
+
+/* side bar */
+
+.sidebar {
+	width: 20%;
+	height: 100%;
+	background: white;
+	padding-top: 45px;
+	position: fixed;
+	z-index: 1;
+}
+
+.sidebar a {
+	display: block;
+	padding: 10px 25px;
+	color: gray;
+	text-decoration: none;
+}
+
+.sidebar a:hover {
+	background: #17a2b8 !important;
+	color: white;
+}
+
+.sidebar .divider {
+	height: 0.5px;
+	background: gray;
+}
+
+.sidebar #cross {
+	position: absolute;
+	top: 2%;
+	right: 8%;
+	font-size: 1.5rem;
+	cursor: pointer;
+}
+
+/* side bar ends */
+
+
+/* content */
+.content {
+	margin-left: 22%;
+}
+
+.content #bars {
+	position: fixed;
+	margin-top: 1%;
+	font-size: 1.5rem;
+	cursor: pointer;
+}
+
+
+.content .input {
+	width: 95%;
+	margin-top: 50px;
+}
+
+
+.img-div {
+	height: 75vh;
+}
+
+.img-div img{
+	width:100%;
+	height:99%;
+	background-size:100% 100%;
+}
+
+
+/* content ends */
+
+
+
+/* media query */
+
+@media only screen and (max-width: 600px) {
+	
+	.sidebar {
+		display: none;
+		width: 50% !important;
+		padding-top: 40px;
+		font-size: medium;
+	}
+	
+	.content {
+		margin-left: 0% !important;
+	}
+	
+}

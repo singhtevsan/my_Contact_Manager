@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="normal/user-template::user-layout(~{::title}, ~{::section})">
+<head>
+	<meta charset="UTF-8" />
+	<title>Dashboard</title>
+</head>
+<body>
+	<section class="d-flex">
+		<div class="container input">
+		
+			<div class="container form-control img-div round">
+				<img alt="home" th:src="@{/img/homeBanner.jpg}" class="img-fluid" />
+			
+			</div>
+			<div class="container form-control text-center">
+				<button class="btn btn-outline-primary mx-3">Contacts</button>
+				<button class="btn btn-outline-success mx-3">Add Contact</button>
+				<button class="btn btn-outline-secondary mx-3">Profile</button>
+			
+			</div>
+			
+			
+		</div>
+	</section>
+</body>
+</html>
