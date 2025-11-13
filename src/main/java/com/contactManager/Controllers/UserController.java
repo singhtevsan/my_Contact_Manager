@@ -9,11 +9,14 @@ import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.contactManager.Entities.Contact;
 import com.contactManager.Entities.User;
 import com.contactManager.Helper.Message;
+import com.contactManager.Repositories.ContactRepository;
 import com.contactManager.Repositories.UserRepository;
 
 import jakarta.validation.Valid;
@@ -32,6 +36,9 @@ public class UserController {
 	
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private ContactRepository contactRepository;
 	
 	
 	@ModelAttribute
@@ -123,5 +130,43 @@ public class UserController {
 		}
 		
 		return "normal/add-contact";
+	}
+	
+	
+	@GetMapping("/viewContacts/{page}")
+	public String viewContactsHandler(@PathVariable int page, Principal principal, Model model) {
+		System.out.println("This is from show all contacts handler");
+		
+		// getting logged in user name
+		String username = principal.getName();
+		
+		// getting details of user by user name
+		User user = userRepository.getUserByUserName(username);
+		
+		// creating the page -> current page and number of records per page
+		PageRequest pageable = PageRequest.of(page, 6);
+		
+		// getting all contacts of user
+		Page<Contact> contacts = contactRepository.getAllContactsByUser(user.getuId(), pageable);
+		
+		// adding data to model
+		if(contacts.isEmpty()) {
+			model.addAttribute("message", new Message("No contacts available !! Please add contacts", "alert-primary"));
+		}
+		else {
+			model.addAttribute("contacts", contacts);
+			model.addAttribute("currentPage", page);
+			model.addAttribute("totalPages", contacts.getTotalPages());
+		}
+		
+		return "normal/view-contacts";
+	}
+	
+	
+	@GetMapping("/showContact/{cId}")
+	public String showContactHandler(@PathVariable int cId) {
+		System.out.println("This is from show contact details handler");
+		
+		return "normal/show-contact";
 	}
 }

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="normal/user-template::user-layout(~{::title}, ~{::section})">
+<head>
+<meta charset="UTF-8">
+<title>All Contacts</title>
+</head>
+<body>
+	<section>
+		<div class="container input">
+			<div class="container bg-white round">
+			
+				<h2 class="text-center text-info py-2"><strong>Your Contacts</strong></h2>
+				
+				<div id="show-table" class="table-responsive">
+					<table class="table bg-white table-hover">
+						<thead>
+							<tr>
+								<th scope="col">#ID</th>
+								<th scope="col">Name</th>
+								<th scope="col">Phone</th>
+								<th scope="col">Email</th>
+								<th scope="col" class="text-center">Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="item : ${contacts}">
+								<th scope="row"></th>
+								
+								<td>
+									<img class="table-profile" th:src="@{'/img/' + ${item.imageUrl}}">
+									<span th:text="${item.name}"></span>
+								</td>
+								
+								<td th:text="${item.phone}"></td>
+								<td th:text="${item.email}"></td>
+								
+								<td class="text-center">
+									<a><i class="fa-solid fa-circle-info fa-lg btn" style="color:#004080;"></i></a>
+									<a><i class="fa-solid fa-pen fa-lg btn" style="color:#004080;"></i></a>
+									<a><i class="fa-solid fa-trash fa-lg btn" style="color:#004080;"></i></a>
+								</td>
+							</tr>
+							
+						</tbody>
+					</table>
+					
+					<nav th:if="${contacts}" aria-label="Page navigation example">
+					
+					  <ul class="pagination mx-1">
+					    <li class="page-item" th:if="${currentPage != 0}">
+					    	<a class="page-link" th:href="@{'/user/viewContacts/' + ${currentPage-1} }">Previous</a>
+					    </li>
+					    
+					    <li th:each="i : ${#numbers.sequence(1, totalPages)}" class="page-item"
+					    	th:classappend="${currentPage == i-1 ? 'active' : ''}">
+					    	<a class="page-link" th:href="@{'/user/viewContacts/' + ${i-1} }" th:text="${i}"></a>
+					    </li>
+					    
+					    <li class="page-item" th:if="${currentPage+1 != totalPages}">
+					    	<a class="page-link" th:href="@{'/user/viewContacts/' + ${currentPage+1} }">Next</a>
+					    </li>
+					  </ul>
+					  
+					</nav>
+				</div>
+				
+				
+				
+			</div>
+		</div>
+	</section>
+</body>
+</html>

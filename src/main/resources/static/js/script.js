@@ -19,8 +19,10 @@ const uploadImage = () => {
 }
 
 const profile = document.getElementById("profile-pic");
-const input = document.getElementById("imgupload");
-
-input.addEventListener("change", () => {
-	profile.src = URL.createObjectURL(input.files[0]);
-});
+if(profile) {
+	const input = document.getElementById("imgupload");
+	
+	input.addEventListener("change", () => {
+		profile.src = URL.createObjectURL(input.files[0]);
+	});
+}
