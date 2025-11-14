@@ -163,9 +163,28 @@ public class UserController {
 	}
 	
 	
-	@GetMapping("/showContact/{cId}")
-	public String showContactHandler(@PathVariable int cId) {
+	@GetMapping("/{cId}/showContact/{page}")
+	public String showContactHandler(@PathVariable int cId, @PathVariable int page, Model model, Principal principal) {
 		System.out.println("This is from show contact details handler");
+		
+		// getting contact from DB using id
+		Contact contact = contactRepository.findById(cId).get();
+		
+		// getting logged in user
+		String username = principal.getName();
+		
+		// getting the user from DB using user name
+		User user = userRepository.getUserByUserName(username);
+		
+		
+		if(user.getuId() == contact.getUser().getuId()) {
+			
+			// add contact to model
+			model.addAttribute("contact", contact);
+			model.addAttribute("currentPage", page);
+			
+		}
+		
 		
 		return "normal/show-contact";
 	}

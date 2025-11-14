@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="normal/user-template::user-layout(~{::title}, ~{::section})">
+<head>
+<meta charset="UTF-8">
+<title>Contact Details</title>
+</head>
+<body>
+	<section>
+
+		<div class="input d-flex card container" style="background-color: #f4f5f7" th:if="${contact}">
+	
+			<div class="row bg-white round m-4 border border-dark">
+				
+				<div class="col-md-4 gradient-custom round d-flex align-items-center justify-content-center">
+				
+					<div class="text-white">
+					
+						<div class="text-center m-2">
+							<img th:src="@{'/img/' + ${contact.imageUrl}}" class="img-fluid" 
+								alt="profile" style="border-radius: 50%; width:100px;">
+						</div>
+						
+						<h4 class="text-center">
+							<span th:text="${contact.name}" ></span><span th:text="' (' +${contact.nickName}+ ')'"></span>
+						</h4>
+									
+						<br>
+					
+						<h5 class="text-center">
+							<a th:href="'mailto:'+${contact.email}" class="text-white">
+								<i class="fa-solid fa-paper-plane"></i> <span th:text="${contact.email}"></span>
+							</a>
+						</h5>
+					
+					</div>
+				</div>
+				
+				
+				<div class="col-md-8">
+					<div class="card-body">
+						<h5><strong>Contact Details</strong></h5>
+						<hr class="mt-0 mb-4">
+											
+						<div class="row">
+							<div class="col-4 mb-4">
+								<h6><strong>Email</strong></h6>
+								<p class="text-muted" th:text="${contact.email}"></p>
+							</div>
+							<div class="col-4 mb-4">
+								<h6><strong>Phone</strong></h6>
+								<p class="text-muted" th:text="${contact.phone}"></p>
+							</div>
+							<div class="col-4 mb-4">
+								<h6><strong>Work</strong></h6>
+								<p class="text-muted" th:text="${contact.work}"></p>
+							</div>
+						</div>
+					
+						<h6><strong>Description</strong></h6>
+						<hr class="mt-0 mb-4">
+						
+						<div class="mx-1">
+							<p class="text-muted" th:text="${contact.description}"></p>
+						</div>
+										
+						<hr class="mt-0 mb-4">
+						
+						<div class="d-flex justify-content-start">
+							<a><button class="btn btn-primary m-1">Update</button></a>
+							<a><button class="btn btn-danger m-1">Delete</button></a>
+							<a th:href="@{'/user/viewContacts/' + ${page} }"><button class="btn btn-secondary m-1">Back</button></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div th:unless="${contact}" class="input container">
+			<div class="alert alert-warning text-center" role="alert">
+				<strong>You have no permission to see this contact</strong>
+			</div>
+		</div>
+		
+	</section>
+</body>
+</html>
