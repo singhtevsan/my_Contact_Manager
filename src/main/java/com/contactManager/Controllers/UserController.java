@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.contactManager.Entities.Contact;
 import com.contactManager.Entities.User;
@@ -151,7 +152,7 @@ public class UserController {
 		
 		// adding data to model
 		if(contacts.isEmpty()) {
-			model.addAttribute("message", new Message("No contacts available !! Please add contacts", "alert-primary"));
+			model.addAttribute("message", new Message("No contacts available on this page !! Please add contacts", "alert-primary"));
 		}
 		else {
 			model.addAttribute("contacts", contacts);
@@ -188,4 +189,47 @@ public class UserController {
 		
 		return "normal/show-contact";
 	}
+	
+	
+	@GetMapping("/{cId}/deleteContact/{page}")
+	public String deleteContactHandler(@PathVariable int cId, @PathVariable int page, Principal principal, RedirectAttributes attributes) {
+		System.out.println("This is from delete contact handler");
+		
+		// getting the contact using the id
+		Contact contact = contactRepository.findById(cId).get();
+		
+		// getting logged in user using principal
+		String username = principal.getName();
+		
+		// getting user from DB with user name
+		User user = userRepository.getUserByUserName(username);
+		
+		if(user.getuId() == contact.getUser().getuId()) {
+			
+			// delete the contact
+			try {
+				
+				// deleting the profile picture
+				File path = new ClassPathResource("static/img").getFile();
+				File obj = new File(path, contact.getImageUrl());
+				obj.delete();
+				
+				// delete the contact
+				contactRepository.delete(contact);
+				
+				attributes.addFlashAttribute("message", new Message("Contact deleted successfully !!", "alert-primary"));
+				
+			} catch (Exception e) {
+				System.out.println("ERROR----> " + e.getMessage());
+				attributes.addFlashAttribute("message", new Message(e.getMessage(), "alert-danger"));
+			}
+		}
+		else {
+			attributes.addFlashAttribute("message", new Message("You are not authorized for this","alert-warning"));
+		}
+		
+		
+		return "redirect:/user/viewContacts/" + page;
+	}
+	
 }

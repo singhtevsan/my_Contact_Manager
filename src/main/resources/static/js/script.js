@@ -25,4 +25,23 @@ if(profile) {
 	input.addEventListener("change", () => {
 		profile.src = URL.createObjectURL(input.files[0]);
 	});
+};
+
+
+const deleteContact = (cId,page) => {
+	swal({
+	  title: "Are you sure?",
+	  text: "Once deleted, you will not be able to recover this contact !!",
+	  icon: "warning",
+	  buttons: true,
+	  dangerMode: true,
+	})
+	.then((willDelete) => {
+	  if (willDelete) {
+		
+			window.location = '/contactManager/user/'+ cId +'/deleteContact/'+page;
+	  } else {
+	    	swal("Your contact is safe !!");
+	  }
+	});
 }

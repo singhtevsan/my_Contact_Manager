@@ -67,7 +67,7 @@
 						
 						<div class="d-flex justify-content-start">
 							<a><button class="btn btn-primary m-1">Update</button></a>
-							<a><button class="btn btn-danger m-1">Delete</button></a>
+							<a th:onclick="|deleteContact(${contact.cId},${page})|"><button class="btn btn-danger m-1">Delete</button></a>
 							<a th:href="@{'/user/viewContacts/' + ${page} }"><button class="btn btn-secondary m-1">Back</button></a>
 						</div>
 					</div>
