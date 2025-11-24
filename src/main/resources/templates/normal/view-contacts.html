@@ -36,8 +36,9 @@
 								
 								<td class="text-center">
 									<a th:href="@{'/user/' + ${item.cId} + '/showContact/' + ${currentPage} }"><i class="fa-solid fa-circle-info fa-lg btn" style="color:#004080;"></i></a>
-									<a><i class="fa-solid fa-pen fa-lg btn" style="color:#004080;"></i></a>
+									<a th:href="@{'/user/' + ${item.cId} + '/updateContact/' + ${currentPage} }"><i class="fa-solid fa-pen fa-lg btn" style="color:#004080;"></i></a>
 									<a th:onclick="|deleteContact(${item.cId},${currentPage})|"><i class="fa-solid fa-trash fa-lg btn" style="color:#004080;"></i></a>
+									
 									<!-- <a th:href="@{'/user/'+ ${item.cId} +'/deleteContact/' + ${currentPage}}"><i class="fa-solid fa-trash fa-lg btn" style="color:#004080;"></i></a> -->
 								</td>
 							</tr>

@@ -232,4 +232,92 @@ public class UserController {
 		return "redirect:/user/viewContacts/" + page;
 	}
 	
+	@GetMapping("/{cId}/updateContact/{page}")
+	public String updateFormHandler(@PathVariable int cId, @PathVariable int page, 
+			Principal principal, Model model, RedirectAttributes attributes) {
+		
+		System.out.println("This is from show update form handler");
+		
+		// getting the contact details using the id
+		Contact contact = contactRepository.findById(cId).get();
+		
+		// getting the logged in user using principal
+		String username = principal.getName();
+		
+		// getting the user from DB using user name
+		User user = userRepository.getUserByUserName(username);
+		
+		if(contact.getUser().getuId() == user.getuId()) {
+			
+			model.addAttribute("contact", contact);
+			model.addAttribute("page", page);
+		}
+		else {
+			attributes.addFlashAttribute("message", new Message("You are not authorized for this","alert-warning"));
+			return "redirect:/user/viewContacts/0";
+		}
+		
+		return "normal/update-contact";
+	}
+	
+	
+	@PostMapping("/process-update")
+	public String processUpdateContact(@Valid @ModelAttribute Contact contact, BindingResult result,
+			@RequestParam("profileImage") MultipartFile file, @RequestParam int page, RedirectAttributes attributes) {
+		
+		System.out.println("This is from process update contact handler");
+		
+		int cId = contact.getcId();
+		
+		try {
+			Contact old = contactRepository.findById(cId).get();
+			
+			// checking the form errors
+			if(result.hasErrors()) {
+				
+				contact.setImageUrl(old.getImageUrl());
+				return "normal/update-contact";
+			}
+			
+			if(!file.isEmpty()) {
+				
+				// deleting the old profile picture but don't delete default profile
+				if(!old.getImageUrl().equals("defaultProfile.png")) {
+					
+					File deleteFile = new ClassPathResource("static/img").getFile();
+					File obj = new File(deleteFile, old.getImageUrl());
+					obj.delete();
+				}
+				
+				// saving the new profile picture
+				contact.setImageUrl(file.getOriginalFilename());
+				
+				// file object with the path of folder
+				File fileObject = new ClassPathResource("static/img").getFile();
+				
+				// absolute path
+				Path path = Paths.get(fileObject.getAbsolutePath() + File.separator + file.getOriginalFilename());
+				
+				Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+					
+			}
+			else {
+				// setting the same old image in contact
+				contact.setImageUrl(old.getImageUrl());
+			}
+			
+			// updating the contact
+			contact.setUser(old.getUser());
+			contactRepository.save(contact);
+			attributes.addFlashAttribute("message", new Message("Contact updated successfully !!", "alert-success"));
+		
+		} catch (Exception e) {
+			
+			System.out.println("ERROR--->" + e.getMessage());
+			attributes.addFlashAttribute("message", new Message(e.getMessage(), "alert-danger"));
+			
+		}
+		
+		return "redirect:/user/"+ cId +"/updateContact/" + page;
+	}
 }

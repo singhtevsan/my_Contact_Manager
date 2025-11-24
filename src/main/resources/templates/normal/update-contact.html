@@ -1,26 +1,28 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="normal/user-template::user-layout(~{::title}, ~{::section})" >
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="normal/user-template::user-layout(~{::title}, ~{::section})">
 <head>
 	<meta charset="UTF-8" />
-	<title>Add Contact</title>
+	<title>Update Contact</title>
 </head>
 <body>
 	<section>
 		<div class="container input">
 			<div class="container bg-white round">
 			
-				<h2 class="text-center text-info py-2"><strong>Add Your Contact</strong></h2>
+				<h2 class="text-center text-info py-2"><strong>Update Your Contact</strong></h2>
 				
 				<div class="container p-2" style="width: 90%">
 				
-					<form th:action="@{/user/process-contact}" method="post" th:object="${contact}" enctype="multipart/form-data" >
+					<form th:action="@{/user/process-update}" method="post" th:object="${contact}" enctype="multipart/form-data" >
 						
+						<input type="hidden" th:value="${contact.cId}" name="cId">
+						<input type="hidden" th:value="${page}" name="page">
 						
 						<div class="form-control">
 						
 							<div class="d-flex flex-column align-items-center justify-content-center">
 							
-								<img alt="profile" th:src="@{/img/defaultProfile.png}"
+								<img alt="profile" th:src="@{'/img/' + ${contact.imageUrl}}"
 								 id="profile-pic" class="rounded-circle img-fluid border" width="120">
 								 
 								<input type="file" id="imgupload" class="d-none" name="profileImage" />
@@ -116,8 +118,11 @@
 							</div>
 							
 							<div class="container text-center">
-								<button type="submit" class="btn btn-info">Submit</button>
+								<button type="submit" class="btn btn-success">update</button>
 								<button type="reset" class="btn btn-secondary">Reset</button>
+								<a th:href="@{'/user/viewContacts/' + ${page} }">
+									<button type="button" class="btn btn-dark">Back</button>
+								</a>
 							</div>
 						</div>
   
@@ -126,9 +131,6 @@
 				</div>
 				
 			</div>
-			
-			
-		
 		</div>
 	</section>
 </body>
