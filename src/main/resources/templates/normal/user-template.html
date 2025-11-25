@@ -18,6 +18,11 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" 
 	integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" 
 	crossorigin="anonymous" referrerpolicy="no-referrer" />
+	
+<!-- jQuery first -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+	integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+	crossorigin="anonymous"></script>
 
 <title th:include="${title}">User Template</title>
 <link rel="stylesheet" th:href="@{/css/style.css}" />
@@ -64,11 +69,11 @@
 		
 			<i onclick="toggleSidebar()" class="fa-regular fa-circle-xmark" id="cross"></i>
 		
-			<a th:href="@{/user/index}" class="item active"><i class="fas fa-home"></i> Dashboard</a>
-			<a th:href="@{/user/viewContacts/0}" class="item active"><i class="fas fa-id-card-alt"></i> All Contacts</a>
-			<a th:href="@{/user/addContact}" class="item active"><i class="fas fa-pencil-alt"></i> Add Contact</a>
-			<a th:href="@{/user/userProfile}" class="item active"><i class="fas fa-user-circle"></i> Profile</a>
-			<a href="" class="item active"><i class="fas fa-cogs"></i> Settings</a>
+			<a id="home-link" th:href="@{/user/index}" class="item active"><i class="fas fa-home"></i> Dashboard</a>
+			<a id="contacts-link" th:href="@{/user/viewContacts/0}" class="item active"><i class="fas fa-id-card-alt"></i> All Contacts</a>
+			<a id="add-link" th:href="@{/user/addContact}" class="item active"><i class="fas fa-pencil-alt"></i> Add Contact</a>
+			<a id="profile-link" th:href="@{/user/userProfile}" class="item active"><i class="fas fa-user-circle"></i> Profile</a>
+			<a id="setting-link" href="" class="item active"><i class="fas fa-cogs"></i> Settings</a>
 			<a th:href="@{/logout}" class="item"><i class="fas fa-sign-out-alt"></i> Logout</a>
 			
 			<div class="divider"></div>
@@ -117,9 +122,6 @@
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     
-	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-		crossorigin="anonymous"></script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
 		integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
