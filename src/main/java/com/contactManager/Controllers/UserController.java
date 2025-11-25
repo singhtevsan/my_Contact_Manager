@@ -57,6 +57,7 @@ public class UserController {
 		model.addAttribute("user", user);
 	}
 
+	
 	@GetMapping("/index")
 	public String indexHandler() {
 		System.out.println("This is from index handler");
@@ -192,7 +193,9 @@ public class UserController {
 	
 	
 	@GetMapping("/{cId}/deleteContact/{page}")
-	public String deleteContactHandler(@PathVariable int cId, @PathVariable int page, Principal principal, RedirectAttributes attributes) {
+	public String deleteContactHandler(@PathVariable int cId, @PathVariable int page,
+			Principal principal, RedirectAttributes attributes) {
+		
 		System.out.println("This is from delete contact handler");
 		
 		// getting the contact using the id
@@ -210,9 +213,11 @@ public class UserController {
 			try {
 				
 				// deleting the profile picture
-				File path = new ClassPathResource("static/img").getFile();
-				File obj = new File(path, contact.getImageUrl());
-				obj.delete();
+				if(!contact.getImageUrl().equals("defaultProfile.png")) {
+					File path = new ClassPathResource("static/img").getFile();
+					File obj = new File(path, contact.getImageUrl());
+					obj.delete();
+				}
 				
 				// delete the contact
 				contactRepository.delete(contact);
@@ -231,6 +236,7 @@ public class UserController {
 		
 		return "redirect:/user/viewContacts/" + page;
 	}
+	
 	
 	@GetMapping("/{cId}/updateContact/{page}")
 	public String updateFormHandler(@PathVariable int cId, @PathVariable int page, 
@@ -319,5 +325,67 @@ public class UserController {
 		}
 		
 		return "redirect:/user/"+ cId +"/updateContact/" + page;
+	}
+	
+	
+	@GetMapping("/userProfile")
+	public String showUserProfile() {
+		System.out.println("This is from show user profile handler");
+		
+		return "normal/user-profile";
+	}
+	
+	
+	@GetMapping("/updateUser")
+	public String updateUserProfile() {
+		System.out.println("This is from update user profile");
+		
+		return "normal/update-user-profile";
+	}
+	
+	
+	@PostMapping("/update-profile")
+	public String updateProfileHandler(@Valid @ModelAttribute User user, BindingResult result,
+			@RequestParam("profileImage") MultipartFile file, RedirectAttributes attributes) {
+		
+		System.out.println("This is from update user profile handler");
+		
+		try {
+			
+			if(result.hasErrors()) {
+				
+				return "normal/update-user-profile";
+			}
+			
+			if(!file.isEmpty()) {
+				
+				File folderPath = new ClassPathResource("static/img").getFile();
+				
+				//deleting the old profile
+				if(!user.getImageUrl().equals("defaultProfile.png")) {
+					File obj = new File(folderPath, user.getImageUrl());
+					obj.delete();
+				}
+				
+				
+				//updating new profile
+				user.setImageUrl(user.getuId() + "_" + file.getOriginalFilename());
+				
+				Path path = Paths.get(folderPath.getAbsolutePath() + File.separator + user.getuId() + "_" + file.getOriginalFilename());
+				
+				Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+			}
+			
+			// updating the user
+			userRepository.save(user);
+			attributes.addFlashAttribute("message", new Message("Profile updated successfully !!", "alert-success"));
+
+			
+		} catch (Exception e) {
+			System.out.println("ERROR-->" + e.getMessage());
+			attributes.addFlashAttribute("message", new Message(e.getMessage(), "alert-danger"));
+		}		
+		
+		return "redirect:/user/userProfile";
 	}
 }

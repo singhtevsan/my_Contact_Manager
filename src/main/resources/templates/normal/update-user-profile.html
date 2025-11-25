@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="normal/user-template::user-layout(~{::title}, ~{::section})">
+<head>
+	<meta charset="UTF-8" />
+	<title>Update Profile</title>
+</head>
+<body>
+<section>
+	<div class="input d-flex card container" style="background-color: #f4f5f7">
+		<div class="bg-white round m-4 border border-dark">
+			<form th:action="@{/user/update-profile}" method="post" th:object="${user}" enctype="multipart/form-data">
+	
+				<div class="gradient-custom round d-flex align-items-center justify-content-center border-dark border-bottom">
+	
+					<div class="text-center m-2">
+						<img th:src="@{'/img/' + ${user.imageUrl}}" alt="profile" 
+						class="img-fluid rounded-circle" id="profile-pic">
+						
+						<input type="file" id="imgupload" class="d-none" name="profileImage" />
+						
+						<i class="fa-regular fa-pen-to-square m-1" onclick="uploadImage()" style="cursor: pointer"></i>
+						
+					</div>
+				</div>
+				
+				<div class="card-body">
+					<h5 class="text-center"><strong>Update Account Details</strong></h5>
+					<hr class="mt-0 mb-4">
+											
+					<div class="offset-md-1">
+					
+						<div class="row form-group">
+							<label class=""><strong>Name:</strong></label>
+							<div class="col-10">
+								<input class="form-control" th:value="${user.name}" name="name"
+								placeholder="Enter Your Name" th:classappend="${#fields.hasErrors('name') ? 'is-invalid' : '' }">
+						
+								<div class="invalid-feedback" th:each="err : ${#fields.errors('name')}" th:text="${err}" ></div>
+							</div>
+						</div>
+						<div class="row form-group">
+							<label class=""><strong>Email:</strong></label>
+							<div class="col-10">
+								<input class="form-control" th:value="${user.email}" name="email"
+								placeholder="Enter Your Email" th:classappend="${#fields.hasErrors('email') ? 'is-invalid' : '' }">
+							
+								<div class="invalid-feedback" th:each="err : ${#fields.errors('email')}" th:text="${err}"></div>
+							</div>
+						</div>	
+						<div class="row form-group">
+							<label><strong>About:</strong></label>
+							<div class="col-10">
+								<textarea class="form-control" th:text="${user.about}" name="about"
+								placeholder="Enter About Yourself" rows="5"></textarea>
+							</div>
+						</div>
+						
+					</div>
+					<hr class="mt-0 mb-4">
+					
+					<div class="offset-md-1">
+					
+						<div class="row form-group">
+							<label><strong>Role:</strong></label>
+							<div class="col-10">
+								<input class="form-control" th:value="${user.role}" readonly>
+							</div>
+						</div>
+					</div>			
+											
+					<hr class="mt-0 mb-4">
+					
+					<div class="text-center">
+						<a><button type="submit" class="btn btn-success m-1">Update</button></a>
+						<a><button type="reset" class="btn btn-primary m-1">Reset</button></a>
+						<a th:href="@{/user/userProfile}"><button type="button" class="btn btn-secondary m-1">Back</button></a>
+					</div>
+				</div>
+				</form>
+			</div>
+		
+	</div>
+</section>
+</body>
+</html>

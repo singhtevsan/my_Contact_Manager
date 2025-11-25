@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="normal/user-template::user-layout(~{::title}, ~{::section})">
+<head>
+	<meta charset="UTF-8" />
+	<title>User Profile</title>
+</head>
+<body>
+	<section>
+		<div class="input d-flex card container" style="background-color: #f4f5f7">
+	
+			<div class="bg-white round m-4 border border-dark">
+				
+				<div class="gradient-custom round d-flex align-items-center justify-content-center">
+				
+					<div>
+					
+						<div class="text-center m-2">
+							<img th:src="@{'/img/' + ${user.imageUrl}}" class="img-fluid rounded-circle" alt="profile">
+						</div>
+					
+					</div>
+				</div>
+				
+				
+				<div class="col-md-12">
+					<div class="card-body text-center">
+						<h5><strong>Your Account Details</strong></h5>
+						<hr class="mt-0 mb-4">
+											
+						<div class="row">
+							<div class="col-6 mb-4">
+								<h6><strong>Name</strong></h6>
+								<p class="text-muted" th:text="${user.name}"></p>
+							</div>
+							<div class="col-6 mb-4">
+								<h6><strong>Email</strong></h6>
+								<p class="text-muted" th:text="${user.email}"></p>
+							</div>
+							
+						</div>
+						<div class="row">
+							<div class="col-6 mb-4">
+								<h6><strong>Role</strong></h6>
+								<p class="text-muted" th:text="${user.role}"></p>
+							</div>
+							<div class="col-6 mb-4">
+								<h6><strong>About</strong></h6>
+								<p class="text-muted" th:text="${user.about}"></p>
+							</div>
+						</div>										
+						<hr class="mt-0 mb-4">
+						
+						<div class="text-center">
+							<a th:href="@{/user/updateUser}"><button class="btn btn-primary m-1">Update</button></a>
+							<a th:href="@{/user/index}"><button class="btn btn-secondary m-1">Back</button></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>
