@@ -43,6 +43,7 @@ public class MySecutityConfiguration {
 		.authorizeHttpRequests(requests -> requests // New way using lambda
 				.requestMatchers("/admin/**").hasRole("ADMIN")
 				.requestMatchers("/user/**").hasRole("USER")
+				.requestMatchers("/set/**").hasRole("USER")
 	            .requestMatchers("/**").permitAll()
 	     
 	    )

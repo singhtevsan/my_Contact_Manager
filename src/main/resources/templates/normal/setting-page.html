@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="normal/user-template::user-layout(~{::title}, ~{::section})">
+<head>
+	<meta charset="UTF-8" />
+	<title>Settings</title>
+</head>
+<body>
+	<section>
+		<div class="container input">
+			<div class="container bg-white round">
+			
+				<h2 class="text-center text-info py-2"><strong>Change Password</strong></h2>
+				
+				<div class="container p-2" style="width: 90%">
+				
+					<form th:action="@{/set/changePassword}" method="post" th:object="${password}">
+						<div class="container form-group p-2">
+						
+							<div>
+								<input name="oldPass" type="password" class="form-control my-1" placeholder="Old Password"
+								th:classappend="${#fields.hasErrors('oldPass') ? 'is-invalid' : ''}">
+								
+								<div class="invalid-feedback" th:each="err : ${#fields.errors('oldPass')}" th:text="${err}"></div>
+							</div>
+							
+							<div>
+								<input name="newPass" type="password" class="form-control my-1" placeholder="New Password"
+								th:classappend="${#fields.hasErrors('newPass') ? 'is-invalid' : ''}">
+								
+								<div class="invalid-feedback" th:each="err : ${#fields.errors('newPass')}" th:text="${err}"></div>
+							</div>
+							
+							
+							<div>
+								<input name="confirmPass" type="password" class="form-control my-1" placeholder="Confirm New Password"
+								th:classappend="${#fields.hasErrors('confirmPass') ? 'is-invalid' : ''}">
+								
+								<div class="invalid-feedback" th:each="err : ${#fields.errors('confirmPass')}" th:text="${err}"></div>
+							</div>
+							
+					
+						</div>
+						<div class="text-center m-1">
+							<button type="submit" class="btn btn-primary">Submit</button>
+							<button type="reset" class="btn btn-warning">Reset</button>
+							<a th:href="@{/user/index}"><button type="button" class="btn btn-secondary">Back</button></a>
+						</div>
+				
+					</form>
+				</div>
+			</div>
+		</div>
+		
+		<script>
+			$(document).ready( () => {
+				$(".item").removeClass("active");
+				$("#setting-link").addClass("active");
+			});
+		</script>
+	</section>
+</body>
+</html>
