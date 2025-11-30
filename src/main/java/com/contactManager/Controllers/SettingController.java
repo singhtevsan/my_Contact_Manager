@@ -24,10 +24,10 @@ import jakarta.validation.Valid;
 public class SettingController {
 
 	@Autowired
-	UserRepository userRepository;
+	private UserRepository userRepository;
 	
 	@Autowired
-	BCryptPasswordEncoder passwordEncoder;
+	private BCryptPasswordEncoder passwordEncoder;
 	
 	@ModelAttribute
 	private void addCommonData(Model model, Principal principal) {

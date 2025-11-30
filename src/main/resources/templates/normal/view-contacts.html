@@ -11,6 +11,16 @@
 			
 				<h2 class="text-center text-info py-2"><strong>Your Contacts</strong></h2>
 				
+				<!-- search box -->
+				<div class="mb-2 position-relative">
+					<input class="form-control search-input" type="text" placeholder="Search Your Contacts" onkeyup="searchContact()" />
+					
+					<div class="search-result mt-2">
+					
+					</div>
+				</div>
+				
+				
 				<div id="show-table" class="table-responsive">
 					<table class="table bg-white table-hover">
 						<thead>

@@ -1,5 +1,7 @@
 package com.contactManager.Repositories;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -8,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.contactManager.Entities.Contact;
+import com.contactManager.Entities.User;
 
 @Repository
 public interface ContactRepository extends JpaRepository<Contact, Integer>{
@@ -19,4 +22,7 @@ public interface ContactRepository extends JpaRepository<Contact, Integer>{
 	// pageable object will have current page and number of records per page
 	
 	
+	
+	// search method
+	List<Contact> findByNameContainingAndUser(String keyword, User user);
 }

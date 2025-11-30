@@ -77,8 +77,23 @@
 			<a th:href="@{/logout}" class="item"><i class="fas fa-sign-out-alt"></i> Logout</a>
 			
 			<div class="divider"></div>
-		
+			
+			<!-- search box -->
+			<div class="m-1" style="width: 95%">
+				<div class="input-group">
+				
+					<div class="input-group-prepend">
+						<span class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
+					</div>
+					
+					<input type="text" class="form-control input-search" placeholder="Search" onkeyup="search()" />
+				</div>
+				<div class="result-search mt-2">
+					
+				</div>
+			</div>
 		</div>
+		
 		
 		<!-- End of Side Bar  -->
 		
